@@ -1,0 +1,84 @@
+#summary The use of javascript for validation is good for a specific environment.
+
+= Introduction =
+
+This article is to discuss and brainstorm rational for using javascript validation for online form development.  I write commonly implemented security levels which are listed from least secure to most secure.  These security levels are meant to be solutions to insecurities of the javascript validation.
+
+
+==Commonly Implemented Security Components with Javascript validation==
+  * _No Java No View._ Don't allow users to see any form if javascript is disabled.
+
+  * _Too Much Load._ Don't allow anyone to post too much data within too much time. If a user is causing availability problems scale them down.  Log everything so that very active users can be identified, tracked, and force their activity to be scaled down.
+
+  * _[http://en.wikipedia.org/wiki/Symmetric_key_algorithm Symmetric-Keys.]_ This is most commonly used however it is insecure.  Each time you login you could be attacked and your account compromised.  Definition of collaboration - any user viewing any other user's created data. or any user copying any other user's data into their data.  Collaboration is when isolation does not exist.
+
+  * _[http://en.wikipedia.org/wiki/Public-key_cryptography Public-key cryptography]_ Never allow collaboration of user's data if there is potential attackers among them.  Only allow users with secure accepted sessions to collaborate. Each having private keys, and them only transferring public keys. Check each user to see if they have secure key pair so we can trust that they are not attackers.
+
+  * _Private Network._ Only allow specific computers from trusted in house employees to collaborate.  Allow outside communication only through VPN tunnels.
+
+  * _Private Workplace Network._ Only allow specific employees to collaborate through their given employment computers.  No outside communication allowed.
+
+==Implications of using _No Java No View_ Security==
+
+===The Bad and the Ugly===
+
+A common internet device now is the mobile phone.  These small devices usually don't have javascript enabled and thus disabling them from being viewers of the form.  This is not ideal if a purpose of a form is to let people self-register themselves for an event.
+
+===The Good News===
+
+All the validation load will be put on the client's computer.
+
+==Implications of using _Too Much Load_ Security==
+
+===The Bad and the Ugly===
+
+===The Good News===
+
+==Implications of using _Public-key cryptography_ Security==
+
+===The Bad and the Ugly===
+
+===The Good News===
+
+==Implications of _Private Network_ Security==
+
+===The Bad and the Ugly===
+Only employees can fill these forms.
+
+===The Good News===
+No need to consume money and time developing security measures.  Nor do you have a possibility to leave a bad impression on outside clients.
+
+
+=Developer Functionality=
+
+== Using javascript for validation ==
+
+===The Bad and the Ugly===
+
+If all validation is disabled when javascript is disabled then an attacker will be able to enter any crap they want into a model.  Complete isolation needs to be implemented between untrustworthy user's models and database tables. A user could be trustworthy at one time and untrustworthy another time.  Its up to you to decide whether you want to handle both cases.
+
+==The Good News==
+
+The good news is that we can ignore the bad news for certain environments and hence leverage the good news that all the validation load will be put on the client's computer.
+
+
+*If environment has enforced isolation*
+
+Suppose your form's purpose is to help someone understand / record / display their data in different places for their own analysis.  If we implement _No Java No View_, then the only worry about validation being gone is that *only attackers* are intentionally posting incorrect data into their personal models.  
+
+*If environment's purpose is to collaborate*  
+
+How do we allow corruption of an attacker's data to not affect another user's clean data?  
+
+If we are in a required collaboration environment then it requires _Public-key cryptography_ or _Private Network_ security to safely assume all user's in the collaborative environment are trusted.  It is required if you want javascript validation.  If you don't want this requirement then what is commonly used is server-side validation along with _Symmetric-Keys_.
+
+
+=Conclusion=
+
+==When to use client-side code for validation==
+
+The use of javascript for validation is good for an environment where there are commonly two types of users.  A trusted user type which uses _Public-key cryptography_ or _Private Network_ which collaborate each other to produce data which untrusted user types can view.  Untrusted users can only view the trusted content and only add / modify their own data.  Thus the corruption of an attacker's data is isolated and does not affect another user's clean data.
+
+==When to use server-side code for validation==
+
+When you want to provide untrusted users to collaborate.  If you want mobile phone availability.

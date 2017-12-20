@@ -1,0 +1,22 @@
+#summary Merging conclusions of client or server-side validation with the freemium model
+
+=Refresh=
+
+As a refresh here are the conclusions of last article.
+
+*When to use client-side code for validation*
+
+The use of javascript for validation is good for an environment where there are commonly two types of users. A *trusted* user type which use _Public-key cryptography_ or a _Private Network_ which collaborate each other to produce data which *untrusted* user types can view. Untrusted users can only view the trusted content and only add / modify their own data. Thus the corruption of an attacker's data is isolated and does not affect another user's clean data.
+
+*When to use server-side code for validation*
+
+When you want to provide untrusted users to collaborate. If you want mobile phone availability.
+
+=A strong business reason for server-side validation=
+
+A google code [http://googleappsdeveloper.blogspot.com/2010/08/freemium-model-for-enterprise-software.html?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed:+GoogleAppsDeveloperBlog+(Google+Apps+Developer+Blog) article] inspired me to write about the [http://en.wikipedia.org/wiki/Freemium Freemium model].
+
+
+What really hit me in the article was: "Freemium works best where there is a 'network effect' or where more free users contributing content or data makes the service more valuable."
+
+And yet if you want untrusted users to collaborate there must be server-side validation in place.  I think many businesses have this model to some extent, and some do not have the tech knowledge/power to implement it.  This gives another strong reason for server-side validation. 

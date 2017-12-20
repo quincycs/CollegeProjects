@@ -1,0 +1,98 @@
+#summary Beginner Web programming project tutorial.
+
+= Introduction =
+
+Made to be the very first beginner tutorial for anyone wanting to start web programming.  
+
+The project is to fetch a few records from a database and display the records on a web page.
+
+A follow up project will be how to store records into the database.
+
+You, the programmer, will be writing HTML / PHP / SQL code.
+
+= Install Software =
+
+
+The first thing to do is install servers on your personal windows computer. let me refer to {xampp} as the installation folder of your servers.
+
+http://www.apachefriends.org/en/xampp-windows.html
+
+
+now install something you'll be using to write the code with.
+
+http://notepad-plus-plus.org/download
+
+= Test Installation =
+
+==HTML==
+in any web browser go to: localhost/
+
+should see stuff about your installed servers.
+
+now for you to write your own web page using only HTML. Open notepad++ and type:
+
+`<html><body>html page</body></html>`
+
+go to {xampp}/htdocs  and make a new folder 'recordList'.
+save the web page in that new folder as 'page.html'
+
+now in your web browser go to: localhost/recordList/page.html
+you should see 'html page' being displayed.
+
+==PHP==
+
+now for you to write your own web page using only php.  Open notepad++ and type in a new file,
+
+{{{
+<?php
+
+echo "php page";
+
+?>
+}}}
+
+save as: {xampp}/htdocs/recordList/page.php
+
+check with browser: localhost/recordList/page.php
+you should see 'php page' being displayed.
+
+==MYSQL==
+
+  * phpmyadmin
+
+go to: localhost/phpmyadmin
+this is how you will manage your database.
+  
+  * new db/table
+just follow the user friendly interface to create a database & tables.
+
+  # create db: recordListDB
+  # create table, 'pets', with two fields, 'type','name' as 'VARCHAR' with length 50.
+
+  * insert/browse data
+
+  # click 'Insert' and enter in the values, 'cat', 'fluffy'. thus inserting a cat with the name 'fluffy'.
+  # click 'Browse' and you should see all your inserted pets.
+  # repeatly add more pets
+
+  * SQL code
+
+  # click SQL.  enter the following: `SELECT * FROM pets;`
+
+the result should show all pets. later you will use this SQL code to fetch all the pets onto a web page.
+
+=Integration=
+
+==PHP / MYSQL==
+
+display first record from db table.
+
+==HTML Table==
+
+code to make a basic table.
+
+==HTML / PHP==
+
+php code to make a basic html table
+
+fill html table with data.

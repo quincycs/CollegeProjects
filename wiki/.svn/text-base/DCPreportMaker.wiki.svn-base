@@ -1,0 +1,49 @@
+<strong>Dynamic Cone Penetrometer Report Maker</strong>
+
+<br>Recommended operating system: Windows XP<br>
+
+Minimum operating system: Windows 2000 Professional
+
+<br><strong>No need to install.  Just download the .exe and that is the one and only file you need!</strong>
+
+<hr>
+
+[http://code.google.com/p/quincy-mitchell-example-code/downloads/detail?name=DCP.exe Download] (~175KB):Updated Aug 14, 2007
+
+<br>The <strong>Dynamic Cone Penetrometer Report Maker</strong> can do the following:
+
+<ul>
+
+
+
+<li>Calculate IBV( Immediate Bearing Value )/Remediation Depth from (Inches/Blow) or (Number of Blows/Six Inches)</li>
+
+<li>Chart the results with a title and heading.</li>
+
+<li>Save/Open this chart.</li>
+
+<li>Export the chart to excel with or without a graph in relation of the growth of values</li>
+
+<li>Makes sure you are asked to save changes.</li>
+
+<li>Fast print one chart</li>
+
+<li>Printing Report Maker</li>
+
+<ul>
+
+	<li>Add multible charts to the print page.</li>
+
+	<li>Add additional text as well as saved titles and headings.</li>
+
+	<li>Add the current opened document on the fly.</li>
+
+	<li>Scale/Move charts</li>
+
+	<li>Change font settings as well as the position of text.</li>
+
+</ul>
+
+<li>Adds/Updates registry value to the file extension .dcp so that every file opened will open to the DCP.exe that was last used.</li>
+
+</ul><a href="http://pavementinteractive.org/index.php?title=Dynamic_cone_penetration_test">What is a DCP?</a>

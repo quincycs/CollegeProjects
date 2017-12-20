@@ -1,0 +1,222 @@
+#summary c++ portable system library
+
+=Quincy's System Library=
+
+Beginnings of a simple system independent C++ codebase.  Built for the purpose of supporting as many popular systems as possible, practical, and easy to understand use.  Current status is just to serve the purpose for example code, however everything listed here has been implemented and checked in.
+
+_Includes:_
+
+  * [http://code.google.com/p/quincy-mitchell-example-code/#Exceptions Exceptions]
+
+  * [http://code.google.com/p/quincy-mitchell-example-code/#Assert Assert]
+
+  * [http://code.google.com/p/quincy-mitchell-example-code/#TCP_Sockets TCP Sockets]
+
+  * [http://code.google.com/p/quincy-mitchell-example-code/#Threads Threads]
+
+  * [http://code.google.com/p/quincy-mitchell-example-code/#Interprocess Interprocess]
+
+==Exceptions==
+{{{
+/* an extended feature on exceptions which prints the location of where the exception was constructed when it is caught.
+Exception thrown: This is a message you put in.
+Location:: Line 35 of ../src/main.cpp
+*/
+//Example:
+
+try{
+
+throw Line_Exception("This is a message you put in.");
+
+}catch(exception &e){
+    cerr << e.what() <<endl;
+}
+}}}
+
+==Assert==
+{{{
+// now you can have a message attached to the assert.
+assert_message("put in a message here to print when bool is false", bool_condition);
+}}}
+
+==TCP Sockets==
+
+Wraps around confusing Boost Library and BSD standard implementations to give easy to understand well documented methods.
+
+{{{
+
+namespace quincySystemLibrary {
+
+/**
+ * Interface into socket implementations.  Each method throws an exception when an unexpected socket error occurs such as the socket being closed by the peer.
+ * 		Current library implementation choices are:
+ * 			boost::asio	to use this implementation, build library with the define: USE_BOOST
+ * 			BSD 		USE_BSD
+ */
+class SocketTCP : private SocketTCPImp {
+public:
+	SocketTCP(){}
+	/// Implementations close the underlying socket if open.
+	virtual ~SocketTCP(){}
+	/// Accepts a new pending connection.
+	void accept(SocketTCP *sock)throw(exception);
+	/// Initialize connection to a local port.
+	void bind(uint32_t port)throw(exception);
+	/// Initialize queue and set the max amount of pending connections.  A connection that can't fit in the queue is dropped.
+	void listen(uint32_t queueSize)throw(exception);
+	/// Close the connection.
+	void close()throw(exception);
+	/// Get the host name of the peer.
+	string getHostName()throw(exception);
+	/// Connect to a server which is accepting new connections on a specific port.
+	void connect(string hostname, uint32_t port)throw(exception);
+	/// Non-Blocking receives some data on socket.  Does not read more than len.
+	/// WARNING: does not null terminate buffer
+	/// returns number of bytes actually read.
+	uint32_t recvNonBlock(char *buffer, uint32_t len)throw(exception);
+	/// Blocking receives exactly desired_len amount of data
+	/// WARNING: does not null terminate buffer
+	void recvBlock(char *buffer, uint32_t desired_len)throw(exception);
+	/// Blocking send.
+	/// WARNING: if using POSIX implementation an error may signal a SIGPIPE which by default on POSIX systems terminate the process.
+	void sendBlock(const char *buffer, uint32_t len)throw(exception);
+	/// Blocks for [ms] until data is ready to be read on socket.
+	/// returns true only if data is ready to be read on socket.
+	bool select(uint32_t ms_timeout)throw(exception);
+	/// Blocks for [ms] until data is ready to be read on at least one socket.
+	/// returns the list of ready to read sockets.
+	static vector<SocketTCP*> groupSelect(vector<SocketTCP*> &sockList, uint32_t ms_timeout);
+
+};
+
+}
+
+
+}}}
+
+==Threads==
+
+Wraps around confusing Boost and POSIX libraries that are commonly used very functionally instead of object oriented.  Why run a plain thread when you can instead add asynchronism to a class! It helps encapsulate the thread's critical sections, parrellelism, and make it easy to read what the thread does because you see where the thread goes easier.
+
+{{{
+
+namespace quincySystemLibrary {
+
+/**
+ * This class's purpose is to provide a subclass all the tools to spawn, cancel, set cancellation points
+ * join in an object oriented way.
+ *
+ */
+class ThreadClass {
+
+public:
+	///The thread is started, and it's entry point is the live() method in the inherited class.
+	void start();
+	/**
+	 * flag turned to let user know whether to cancel and join this object for clean up.
+	 * flag is turned false just before scheduleJoin() is called. if the thread does not hit
+	 *  a system defined cancelation point frequently, then this method call can be used by
+	 *  the thread to check if it was canceled and act accordingly.
+	 */
+	bool isRunning();
+
+	/**
+	 * blocks until thread is in an able to cancel scope, then a cancel is performed on the thread and
+	 * scheduleJoin() is called.  WARNING: It is potentially inefficient to have an empty scheduleJoin()
+	 * implementation and call Join() right after a call to cancel.  The cancel on the underlying thread
+	 * could take a significant amount of cpu cycles.
+	 */
+	void cancel();
+	/**
+	 * join the underlying thread. (blocking).  Ideally this call should have been scheduled by
+	 * scheduleJoin() so that this method would return immediately and not have to block.
+	 */
+	void join();
+	virtual ~ThreadClass();
+
+	/**
+	 * To set a critical section of code which can not be canceled then call this method
+	 * to set a the caller's scope of code not able to be canceled.
+	 *
+	 * example application:
+	 *		//while(1){
+	 * 		//	some sleeping function or blocking read
+	 * 		//	 { //create new scope of code not able to cancel.
+	 * 		//		ScopedLock lock = ScopeNoCancelSection();
+	 * 		//		///code that can't be canceled
+	 * 		//	 } //lock out of scope so it unlocks mutex
+	 * 		//}
+	 * Note: if return value is not set then mutex is unlocked after this call.
+	 * see rational of ScopedLock in Thread.hpp
+	 */
+	ScopedLock scopeNoCancelSection();
+protected:
+	/// underlying thread structure
+	Thread *thread;
+	/// creates underlying thread structure, but does not start thread.
+	ThreadClass();
+
+	/**
+	 * this method is the last words of the thread before it waits to be joined.
+	 * It is called during cancel() and after the thread returns.
+	 * It is recommended that only operations of notifying another thread to call join() should be done.
+	 */
+	virtual void scheduleJoin()=0;
+	/// thread entry point method which is called by threadStarter()
+	virtual void live() = 0;
+
+private:
+	/// underlying thread entry point calls live(), scheduleJoin() then thread waits to be joined.
+	static THREADRETURN threadStarter(void *threadParams);
+	/// underlying mutex that gets locked for ScopeNoCancelSection() and Cancel()
+	Mutex criticalSection;
+	/// underlying flag used to implement isRunning().
+	bool running;
+};
+
+}
+
+}}}
+
+==Interprocess==
+
+Do you want to transfer data safely between threads?  Here is a shared queue which a thread can add data for a thread to receive.
+{{{
+
+namespace quincySystemLibrary {
+
+///Inter-Process Communication of a certain data type T.  Allows many senders and many receivers.
+template <class T>
+class IPC {
+
+public:
+	IPC();
+	virtual ~IPC();
+
+	///non-blocking. stores into a queue and signals any sleeping threads in recv().
+	void send(T* tType);
+
+	/**
+	 * blocking. blocks if queue is empty by putting thread to sleep
+	 * and waking up when a send() signals this thread.
+	 */
+	T* recv();
+
+	uint32_t queueLength();
+
+private:
+	bool begin_wait;
+	Mutex mutexWaiters;
+	ConditionVariable *monitorWaitersCond;//use to make sure only one thread is waiting for signal.
+
+	queue<T*> q;//queue of sent data
+	ConditionVariable *cond;
+	Mutex mutex;
+
+	void allowOnlyOneReceiver();
+	void signalWaiters();
+};
+
+}
+
+}}}

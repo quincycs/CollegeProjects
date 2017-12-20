@@ -1,0 +1,13 @@
+#summary ignorant rant.
+
+= Introduction =
+
+Follow me and dream a little. Today there are many disjoint frameworks that work well for their task and component however do not talk well with their neighborhood frameworks/technologies. Each seem to be their own beast to tackle.
+
+Most web frameworks and technologies are built to force you to think of Model, View, Controller. Each of them are beasts which have their own beasts inside. Some GUI frameworks even have a MVC framework inside. This recursive structure gives a more formal way of designing.
+
+Here is a common scenario, you make a new online form and a new requirement comes in awhile another requirement is taken away. Now you have to change at least three places. There is modularity, but no center. Is there a way of changing one place instead of changing at least three?
+
+I think creating a framework to make the answer, Yes, would be a miracle.
+
+Now where do we start?

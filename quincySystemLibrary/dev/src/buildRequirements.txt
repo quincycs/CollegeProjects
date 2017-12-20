@@ -1,0 +1,16 @@
+
+Use ubuntu for development due to it's easy to install repo packages below.
+
+For eclipse development: 
+doxygen
+the eclox eclipse update site to install the eclipse plugin for doxygen: http://download.gna.org/eclox/update
+all libraries below
+
+To build boost implementations you need:
+libboost1.40-all-dev 
+libboost1.40-dbg 
+libboost1.40-doc
+pthread
+
+To build POSIX/BSD implementations you need:
+pthread
