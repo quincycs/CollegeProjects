@@ -8,7 +8,7 @@ Minimum operating system: Windows 2000 Professional
 
 <hr>
 
-[http://code.google.com/p/quincy-mitchell-example-code/downloads/detail?name=DCP.exe Download] (~175KB):Updated Aug 14, 2007
+[https://github.com/quincycs/CollegeProjects/blob/master/downloads/DCP.exe Download] (~175KB):Updated Aug 14, 2007
 
 <br>The <strong>Dynamic Cone Penetrometer Report Maker</strong> can do the following:
 
