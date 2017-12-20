@@ -6,15 +6,15 @@ Beginnings of a simple system independent C++ codebase.  Built for the purpose o
 
 _Includes:_
 
-  * [http://code.google.com/p/quincy-mitchell-example-code/#Exceptions Exceptions]
+  * Exceptions
 
-  * [http://code.google.com/p/quincy-mitchell-example-code/#Assert Assert]
+  * Assert
 
-  * [http://code.google.com/p/quincy-mitchell-example-code/#TCP_Sockets TCP Sockets]
+  * Sockets
 
-  * [http://code.google.com/p/quincy-mitchell-example-code/#Threads Threads]
+  * Threads
 
-  * [http://code.google.com/p/quincy-mitchell-example-code/#Interprocess Interprocess]
+  * Interprocess
 
 ==Exceptions==
 {{{
