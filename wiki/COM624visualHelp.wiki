@@ -6,10 +6,9 @@ Minimum operating system: Windows 2000 Professional
 
 <hr>
 
-[http://code.google.com/p/quincy-mitchell-example-code/downloads/detail?name=helpCOM624.exe Download] (~836KB):Updated Aug 14, 2007
+[https://github.com/quincycs/CollegeProjects/blob/master/downloads/helpCOM624.exe Download] (~836KB):Updated Aug 14, 2007
 
 <br>The <strong>COM624 Help</strong> Program is a graphical interface representing the COM624 Help.
 
 To download com624 go <a href="http://www.fhwa.dot.gov/engineering/geotech/software/softwaredetail.cfm#com624p">here</a><br>
 
-<img src="help.jpg">
