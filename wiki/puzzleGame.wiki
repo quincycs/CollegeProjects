@@ -6,7 +6,7 @@ Minimum operating system: Windows 2000 Professional
 
 <hr>
 
-[http://code.google.com/p/quincy-mitchell-example-code/downloads/detail?name=game.exe Download] (~81KB):Updated Aug 9, 2007<br>
+[https://github.com/quincycs/CollegeProjects/blob/master/downloads/game.exe Download] (~81KB):Updated Aug 9, 2007<br>
 
 An incomplete puzzle game.  Try to make all the squares the same color.<br>
 
