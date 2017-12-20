@@ -10,14 +10,10 @@ Minimum operating system: Windows 2000 Professional
 
 An incomplete puzzle game.  Try to make all the squares the same color.<br>
 
-  <ul>
 
 	<li>Initial random position</li>
 
 	<li>Variable rows/columns</li>
 
-  </ul>
-
- <br>
 
 <img src="game.jpg">
